@@ -1,0 +1,74 @@
+# Programador: Rafael Constanzo
+
+class Cliente:
+    def __init__(self, numero) -> None:
+        self.numero = numero
+        self.siguiente = None
+
+class ColaClientes:
+    def __init__(self) -> None:
+        self.frente = None
+        self.final = None
+
+    def encolar(self, numero):
+        """Agrega un elemento al final de la cola"""
+    
+        nuevo = Cliente(numero)
+    
+        if self.frente is None:
+            self.frente = nuevo
+            self.final = nuevo
+        else:
+            self.final.siguiente = nuevo
+            self.final = nuevo
+            
+    def desencolar(self):
+        """Elimina el Cliente que esta al frente"""
+                
+        if self.frente is None:          
+            raise IndexError("La fila esta vacía")
+    
+        numero = self.frente.numero
+        self.frente = self.frente.siguiente
+    
+        if self.frente is None:
+            self.final = None
+    
+        return numero
+
+    def peek(self):
+        """Consulta el elemento del frente sin eliminarlo"""
+        if self.frente is None:
+            return None
+            #raise IndexError("La fila esta vacía")
+        return self.frente.numero
+
+    def show(self):
+        """Muestra todos los elementos de la cola"""
+        actual = self.frente
+
+        while actual is not None:
+            print(actual.numero, end="-> ")
+            actual = actual.siguiente
+
+        print("None")
+
+cola = ColaClientes()
+
+cola.encolar(1)
+cola.encolar(2)
+cola.encolar(3)
+cola.encolar(4)
+
+print("")
+print("Contenido de la Cola de Clientes:", end=" ")
+cola.show()
+
+print("Próximo Cliente a ser Atendido:", cola.peek())
+
+print("Atendiendo al Cliente:", cola.desencolar())
+
+print("Contenido de la cola después de atender al cliente:", end=" ")
+cola.show()
+
+print("")
